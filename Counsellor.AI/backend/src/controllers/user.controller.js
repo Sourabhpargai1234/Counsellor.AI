@@ -135,6 +135,21 @@ const loginUser = asyncHandler(async(req, res) => {
     )
 })
 
+const getUserProfile = asyncHandler(async (req, res) => {
+    try {
+        const { refreshToken } = req.cookies;  
+        const user = await User.findOne({ refreshToken });  
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }    
+        res.json(user);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        res.status(500).json({ message: 'Server error' });
+      }
+});
+
+
 let pythonProcess;
 let resultCallbacks = [];
 
@@ -242,4 +257,4 @@ const llmModel = asyncHandler((req,res) => {
 
 
 
-export {registerUser,loginUser, aiModel, llmModel}
+export {registerUser,loginUser, aiModel, llmModel, getUserProfile}
