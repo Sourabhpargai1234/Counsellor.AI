@@ -1,13 +1,6 @@
 {
-    "rewrites": [
-      { "source": "/", "destination": "/pages" },
-      { "source": "/ai", "destination": "/pages" },
-      { "source": "/feedback", "destination": "/pages" },
-      { "source": "/contact", "destination": "/pages" },
-      { "source": "/profile", "destination": "/pages" },
-      { "source": "/register", "destination": "/pages" },
-      { "source": "/login", "destination": "/pages" },
-      { "source": "/(.*)", "destination": "/pages" }
-    ]
-  }
-  
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/pages" }
+  ]
+}
