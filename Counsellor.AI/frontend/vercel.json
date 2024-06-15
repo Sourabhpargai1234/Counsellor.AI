@@ -7,7 +7,7 @@
       { "source": "/profile", "destination": "/" },
       { "source": "/register", "destination": "/" },
       { "source": "/login", "destination": "/" },
-      { "source": "/(.*)", "destination": "/" }  // Fallback route
+      { "source": "/(.*)", "destination": "/" }
     ]
   }
   
