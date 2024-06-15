@@ -1,5 +1,11 @@
 {
     "rewrites": [
-      { "source": "/(.*)", "destination": "/" }
+      { "source": "/", "destination": "/" },
+      { "source": "/ai", "destination": "/" },
+      { "source": "/feedback", "destination": "/" },
+      { "source": "/contact", "destination": "/" },
+      { "source": "/profile", "destination": "/" },
+      { "source": "/register", "destination": "/" },
+      { "source": "/login", "destination": "/" }
     ]
-}
+  }
