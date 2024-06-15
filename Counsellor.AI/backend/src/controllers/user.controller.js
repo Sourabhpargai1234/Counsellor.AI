@@ -10,7 +10,7 @@ import 'dotenv/config';
 const generateAccessAndRefreshTokens = async(userId) =>{
     try {
         const user = await User.findById(userId)
-        console.log("here i am",user)
+        //console.log("here i am",user)
         const accessToken = user.generateAccessToken()
         const refreshToken = user.generateRefreshToken()
         user.refreshToken = refreshToken
@@ -37,8 +37,8 @@ const registerUser = asyncHandler(async(req, res) => {
     //return response
 
     const {fullName, email, username, password} = req.body
-    console.log(req.body)
-    console.log(req.files)
+    //console.log(req.body)
+    //console.log(req.files)
 
     if(
         [fullName, email, username, password].some((field) => 
@@ -53,26 +53,9 @@ const registerUser = asyncHandler(async(req, res) => {
         throw new ApiError(409, "User existed already with username or email")
     }
 
-    let avatarLocalPath;
-    if(req.files && Array.isArray(req.files.avatar) && req.files.avatar.length>0){
-        avatarLocalPath = req.files?.avatar[0]?.path;
-    }
-
-    //const coverImageLocalPath = req.files?.coverImage[0]?.path;
-    let coverImageLocalPath;
-    if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0){      //used req.files since we have taken an array in user.routes.js
-        coverImageLocalPath = req.files?.coverImage[0]?.path;
-    }
-
-
-    const avatar=await uploadOnCloudinary(avatarLocalPath)
-    const coverImage=await uploadOnCloudinary(coverImageLocalPath)
-
 
     const user = await User.create({
         fullName,
-        avatar: avatar?.url || "",
-        coverImage: coverImage?.url || "",
         email,
         password,
         username :username.toLowerCase()
@@ -111,7 +94,7 @@ const loginUser = asyncHandler(async(req, res) => {
         throw new ApiError(404, "Password Invalid")
     }
     const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id)
-    console.log('Generated tokens:', { accessToken, refreshToken });
+    //console.log('Generated tokens:', { accessToken, refreshToken });
 
     if (!refreshToken) {
         throw new ApiError(500, "Refresh token not generated");
@@ -148,6 +131,50 @@ const getUserProfile = asyncHandler(async (req, res) => {
         res.status(500).json({ message: 'Server error' });
       }
 });
+
+const editUserProfile = asyncHandler(async (req, res) => {
+    const { fullName, username } = req.body;
+
+    let avatarLocalPath;
+    if (req.files && Array.isArray(req.files.avatar) && req.files.avatar.length > 0) {
+        avatarLocalPath = req.files.avatar[0].path;
+    }
+
+    let coverImageLocalPath;
+    if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
+        coverImageLocalPath = req.files.coverImage[0].path;
+    }
+
+    // Upload to Cloudinary and get the URLs
+    const avatarUpload = avatarLocalPath ? uploadOnCloudinary(avatarLocalPath) : Promise.resolve(null);
+    const coverImageUpload = coverImageLocalPath ? uploadOnCloudinary(coverImageLocalPath) : Promise.resolve(null);
+
+    const [avatar, coverImage] = await Promise.all([avatarUpload, coverImageUpload]);
+
+    let updateFields = {};
+    if (fullName) {
+        updateFields.fullName = fullName;
+    }
+    if (avatar && avatar.url) {
+        updateFields.avatar = avatar.url;
+    }
+    if (coverImage && coverImage.url) {
+        updateFields.coverImage = coverImage.url;
+    }
+
+    const user = await User.findOneAndUpdate(
+        { username: username }, // Query by username
+        { $set: updateFields },
+        { new: true }
+    );
+
+    if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json(user);
+});
+
 
 
 let pythonProcess;
@@ -257,4 +284,4 @@ const llmModel = asyncHandler((req,res) => {
 
 
 
-export {registerUser,loginUser, aiModel, llmModel, getUserProfile}
+export {registerUser,loginUser, aiModel, llmModel, getUserProfile, editUserProfile}

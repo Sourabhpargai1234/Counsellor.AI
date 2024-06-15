@@ -3,6 +3,7 @@ import TextTransition, { presets } from 'react-text-transition';
 import { IoReorderThreeSharp } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import './index.css'
+import { FaBrain, FaChartLine, FaHandsHelping } from 'react-icons/fa';
 
 
 function Homepage() {
@@ -54,13 +55,22 @@ function Homepage() {
           </li>
         </ul>
       </nav>
-      <div className=' text-green-700 italic font-bold text-4xl flex h-screen justify-center items-center flex-col'>
-         <h1>Give me data I will</h1>
-         <br />
-         <h1><TextTransition springConfig={presets.wobbly}>{TEXTS[index % TEXTS.length]}</TextTransition></h1>
-         <br />
-         <h1>For the genuine one's</h1>
+      <div className="text-green-700 italic font-bold text-4xl flex h-screen justify-center items-center flex-col bg-gradient-to-r from-green-200 to-green-500">
+      <FaBrain className="text-6xl mb-4 text-white" />
+      <h1 className="mb-4">Give me data I will</h1>
+      <h1 className="text-5xl text-white mb-4 flex justify-between items-center">
+        <TextTransition springConfig={presets.wobbly}>
+          {TEXTS[index % TEXTS.length]}
+        </TextTransition>
+      </h1>
+      <h1>For the genuine one's</h1>
+      <FaHandsHelping className="text-6xl mb-4 text-white" />
+    </div>
+    <footer className="bg-gray-800 text-white p-4">
+      <div className="container mx-auto text-center">
+        <p>&copy; 2024 Smart Counseling System. All rights reserved.</p>
       </div>
+    </footer>
       </div>
     </>
   )

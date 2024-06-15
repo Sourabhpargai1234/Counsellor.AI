@@ -29,11 +29,12 @@ export default function Registerpage() {
         axios
         .post('/api/v1/users/register', data)
         .then(() => {
+          e.preventDefault()
           enqueueSnackbar('User registered successfully', { variant: 'success' });
           navigate('/');
         })
         .catch((error) => {
-          enqueueSnackbar('Error registering user', { variant: 'error' });
+          enqueueSnackbar("User registered with same username or email", { variant: 'error' });
           console.error(error);
         });
       };
@@ -42,7 +43,7 @@ export default function Registerpage() {
 
 
   return (
-    <div className='flex justify-center items-center h-screen bg-cyan-400 rounded-lg'>
+    <div className='flex justify-center items-center h-screen bg-slate-300 rounded-lg bg-gradient-to-r from-green-200 to-green-500'>
             <form className='md:w-1/2  mx-auto my-auto space-y-6 px-6 pb-4 border-2 border-black bg-gray-100 rounded-lg'>
                 <span onClick={navigateto} className='float-right cursor-pointer'><IoMdCloseCircleOutline style={{ color: 'gray', fontSize: '50px' }}/></span>
                 <h3 className='text-xl text-center font-medium text-blue-600'>Register</h3>

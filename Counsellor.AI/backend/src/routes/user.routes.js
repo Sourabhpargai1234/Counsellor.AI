@@ -1,11 +1,15 @@
 import { Router } from "express";
-import { registerUser, aiModel, loginUser, llmModel, getUserProfile} from "../controllers/user.controller.js";
+import { registerUser, aiModel, loginUser, llmModel, getUserProfile, editUserProfile} from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router()
+router.route("/register").post(registerUser)
+router.route("/login").post(loginUser)
+router.route("/qa").post(aiModel)
+router.route("/llm").post(llmModel)
+router.route("/profile").get(getUserProfile)
 
-
-router.route("/register").post(
+router.route("/edit").post(
     upload.fields([                               //yeh humara middleware hai
         {
             name: "avatar",
@@ -16,9 +20,5 @@ router.route("/register").post(
             maxCount: 1
         }
     ]),
-    registerUser)
-router.route("/login").post(loginUser)
-router.route("/qa").post(aiModel)
-router.route("/llm").post(llmModel)
-router.route("/profile").get(getUserProfile)
+    editUserProfile)
 export default router
