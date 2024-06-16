@@ -26,6 +26,11 @@ export default function Registerpage() {
           username,
           password
         };
+        if (!data.fullName || !data.email || !data.username || !data.password) {
+            navigate('/register')
+            enqueueSnackbar('All fields are required', { variant: 'info' });
+            return ;
+        }
         axios
         .post('/api/v1/users/register', data)
         .then(() => {

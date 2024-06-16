@@ -20,7 +20,11 @@ export default function Loginpage() {
           username,
           password,
         };
-    
+        if (!data.username || !data.password) {
+            navigate('/login')
+            enqueueSnackbar('All fields are required', { variant: 'info' });
+            return;
+        }
         try {
           await axios.post('/api/v1/users/login', data);
           enqueueSnackbar('Logged-In successfully', { variant: 'success' });

@@ -3,6 +3,10 @@ import { registerUser, aiModel, loginUser, llmModel, getUserProfile, editUserPro
 import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router()
+
+router.get('/', (req, res) => {
+    res.send('Hello world');
+});
 router.route("/register").post(registerUser)
 router.route("/login").post(loginUser)
 router.route("/qa").post(aiModel)
