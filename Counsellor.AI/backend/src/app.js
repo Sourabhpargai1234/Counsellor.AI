@@ -5,7 +5,8 @@ import "dotenv/config"
 
 const app = express();
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: ["https://counsellor-ai-git-main-sourabhpargai1234s-projects.vercel.app"],
+    methods:["POST","GET"],
     credentials: true
 }))
 
