@@ -1,7 +1,7 @@
 import { app } from './app.js'
 import connectDB from './Database/db.js'
 import 'dotenv/config'
-const port = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000
 
 connectDB()
 .then(() => {
@@ -9,8 +9,8 @@ connectDB()
         console.log("Caught error: ",error);
         throw error
     })
-    app.listen(port, ()=> {
-        console.log(`Running on ${port}`);
+    app.listen(PORT, ()=> {
+        console.log(`Running on ${PORT}`);
     })
 })
 .catch((error) => {
