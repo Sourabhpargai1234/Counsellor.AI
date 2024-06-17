@@ -17,6 +17,7 @@ export default function ProtectedRoute() {
         const response = await axios.get('/api/v1/users/profile', { withCredentials: true });
         if (response) {
           setIsAuthenticated(true);
+          navigate('/ai')
         }
       } catch (error) {
         enqueueSnackbar('Register or Login first', { variant: 'info' });

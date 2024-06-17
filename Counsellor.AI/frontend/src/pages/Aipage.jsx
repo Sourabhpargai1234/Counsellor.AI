@@ -22,7 +22,7 @@ export default function Aipage(){
     setIsChecked(!isChecked);
   };
 
-  const handleClick = (authed) => async (e) => {
+  const handleClick =  async (e) => {
     e.preventDefault();
     setLoading(true);
     const data = { context, question };
@@ -42,7 +42,7 @@ export default function Aipage(){
     }
   };
 
-  const handleClick2 =(authed) => async (e) => {
+  const handleClick2 = async (e) => {
     e.preventDefault();
     setLoading2(true);
     const data = { question2 };
