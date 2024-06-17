@@ -176,7 +176,6 @@ const editUserProfile = asyncHandler(async (req, res) => {
 });
 
 
-
 let pythonProcess;
 let resultCallbacks = [];
 
@@ -220,6 +219,11 @@ function startPythonProcess() {
 
 // Start the Python process
 startPythonProcess();
+
+
+
+
+
 
 const aiModel = asyncHandler((req, res) => {
     const { context, question } = req.body;
@@ -284,4 +288,4 @@ const llmModel = asyncHandler((req,res) => {
 
 
 
-export {registerUser,loginUser, aiModel, llmModel, getUserProfile, editUserProfile}
+export {registerUser,loginUser, llmModel,aiModel, getUserProfile, editUserProfile}

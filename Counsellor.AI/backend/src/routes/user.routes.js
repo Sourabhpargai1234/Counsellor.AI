@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerUser, aiModel, loginUser, llmModel, getUserProfile, editUserProfile} from "../controllers/user.controller.js";
+import { registerUser, loginUser, llmModel, getUserProfile, editUserProfile, aiModel} from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router()
